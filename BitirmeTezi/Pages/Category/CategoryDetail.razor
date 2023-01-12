@@ -1,0 +1,90 @@
+﻿@using BusinessLayer.Concrete
+@using DataAcceLayer.EntityFramework
+@inject NavigationManager navManager
+@page "/CategoryDetail/{id:int}"
+@attribute [Authorize(Roles = "administration")]
+@{
+    var category = Cm.GetByID(id);
+
+}
+
+<AuthorizeView>
+    <Authorized>
+
+
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <a class="btn btn-primary" href='/CategoryAdd'>Add</a>
+            <br />
+            <!-- Basic Bootstrap Table -->
+            <div class="card">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">&nbsp; Admin/</span>Category</h4>
+              
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Category ID</th>
+                                <th>Category Name</th>
+                                
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            
+                                <tr>
+                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@category.CategoryID</strong></td>
+                                <td>@category.CategoryName</td>
+                                
+
+                                <td><span class="badge bg-label-primary me-1">@category.CategoryStatus</span> <button @onclick="()=>Change(category.CategoryID)">Change</button></td>
+
+
+                                    
+
+                                </tr>
+                            
+
+                        </tbody>
+                    </table>
+                    <center><h2>Description</h2></center>
+                    <p>@category.CategoryDescription</p>
+                </div>
+                <button class="btn btn-danger" @onclick="()=>Delete(category.CategoryID)"> Delete </button>
+                <a class="btn btn-secondary" href='/OurTeamUpdate/@category.CategoryID'><i class="bx bx-edit-alt me-1"></i> Update </a>
+            </div>
+
+
+    </Authorized>
+
+</AuthorizeView>
+
+@code {
+    [Parameter] public int id { get; set; }
+    CategoryManager Cm = new CategoryManager(new ECategoryRepository());
+    private List<Entitylayer.Category> Getcategory()
+    {
+        return Cm.GetList();
+    }
+    private void Change(int id)
+    {
+        var category = Cm.GetByID(id);
+        if (category.CategoryStatus == true)
+        {
+            category.CategoryStatus = false;
+
+        }
+        else
+        {
+            category.CategoryStatus = true;
+        }
+        Cm.CategoryUpdate(category);
+    }
+    private async void Delete(int id)
+    {
+        var value = Cm.GetByID(id);
+
+
+        Cm.CategoryDelete(value);
+
+    }
+}

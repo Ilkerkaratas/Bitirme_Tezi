@@ -1,0 +1,129 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    int sayac = 0;
+}
+@model List<Entitylayer.Work>
+
+
+<!-- Start Banner Hero -->
+<div class="banner-wrapper bg">
+    <div  id="index_banner" class="banner-vertical-center-index container-fluid pt-5">
+
+        <!-- Start slider -->
+        @await Component.InvokeAsync("AnnouncementList")
+        <!-- End slider -->
+
+    </div>
+</div>
+<!-- End Banner Hero -->
+<!-- Start Service -->
+<section class="service-wrapper py-3">
+    <div class="container-fluid pb-3">
+        <div class="row">
+            <h2 class="h2 text-center col-12 py-5 semi-bold-600">Neden Bizi Tercih Etmelisiniz</h2>
+            <div class="service-header col-2 col-lg-3 text-end light-300">
+                <i class='bx bx-gift h3 mt-1'></i>
+            </div>
+            <div class="service-heading col-10 col-lg-9 text-start float-end light-300">
+                <h2 class="h3 pb-4 typo-space-line">Gelecek İçin Başarı</h2>
+
+            </div>
+        </div>
+        <p class="service-footer col-10 offset-2 col-lg-9 offset-lg-3 text-start pb-3 text-muted px-2">
+           Müşteri memnuniyetini önemsiyor ve her zaman bu mottoda çalışıyoruz.
+        </p>
+
+    </div>
+
+    <div class="service-tag py-5 bg-secondary">
+        <div class="col-md-12">
+            <h3 class="h3 text-center col-12 semi-bold-600" style="color:white;">SON İŞLERİMİZ</h3>
+        </div>
+    </div>
+
+</section>
+
+<section class="container overflow-hidden py-5">
+    <div class="row gx-5 gx-sm-3 gx-lg-5 gy-lg-5 gy-3 pb-3 projects">
+        @foreach (var item in Model)
+        {
+            
+                if (sayac < 8)
+            {
+                <!-- Start Recent Work -->
+                <div class="col-xl-3 col-md-4 col-sm-6 project @item.category.CategoryName">
+                    <a asp-action="WorkDetail" asp-route-id="@item.WorkID" asp-controller="Work" class="service-work card border-0 text-white shadow-sm overflow-hidden mx-5 m-sm-0">
+                        <img class="service card-img" src="./img/@item.WorkImage" alt="Card image" style="object-fit:cover;aspect-ratio:4/3">
+                        <div class="service-work-vertical card-img-overlay d-flex align-items-end">
+                            <div class="service-work-content text-left text-light">
+                             
+                                <h3>@item.WorkTitle</h3>
+                                <p class="card-text">
+                                    @{
+
+                                        if (item.WorkContent != null)
+                                        {
+                                            if (item.WorkContent.Length > 50)
+                                            {
+                                            <p> @item.WorkContent.Substring(0, 50)...</p>
+                                            }
+                                            else
+                                            {
+                                            <p>@item.WorkContent</p>
+                                            }
+                                        }
+
+                                    }
+                                </p>
+                                <span class="btn btn-outline-light rounded-pill mb-lg-3 px-lg-4 light-300">@item.category.CategoryName</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- End Recent Work -->
+            }
+                else
+            {
+                break;
+            }
+
+            sayac++; 
+            
+           
+
+        }
+    </div>
+</section>
+<!-- End Service -->
+<!-- Start View Work -->
+<section class="bg-secondary">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-2 col-12 text-light align-items-center">
+                <i class='display-1 bx bxs-box bx-lg'></i>
+            </div>
+            <div class="col-lg-7 col-12 text-light pt-2">
+                <h3 class="h4 light-300">Başarıyı Yakalamak İçin</h3>
+                <p class="light-300">Bizi Tercih Edin.</p>
+            </div>
+            <div class="col-lg-3 col-12 pt-4">
+                <a asp-action="Work" asp-controller="Home" class="btn btn-primary rounded-pill btn-block shadow px-4 py-2">İşlerimize Gözat</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End View Work -->
+<!-- Start Recent Work -->
+<section class="py-5 mb-5">
+    <div class="container">
+        <div class="recent-work-header row text-center pb-5">
+            <h2 class="col-md-6 m-auto h2 semi-bold-600 py-5">Çalışma Alanlarımız</h2>
+        </div>
+        <div class="row gy-5 g-lg-5 mb-4">
+
+            @await Component.InvokeAsync("OurServiceList")
+        </div>
+    </div>
+</section>
+<!-- End Recent Work -->

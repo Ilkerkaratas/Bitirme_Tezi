@@ -1,0 +1,108 @@
+﻿@using BusinessLayer.Concrete
+@using DataAcceLayer.EntityFramework
+@page "/contactadmin"
+@attribute [Authorize(Roles = "administration")]
+
+<AuthorizeView>
+    <Authorized>
+
+    
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+
+            <!-- Basic Bootstrap Table -->
+            <div class="card">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"> Admin/</span>Contact</h4>
+               
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Contact ID</th>
+                                <th>Contact Name</th>
+                                <th>Contact Subject</th>
+                                <th>Contact Phone</th>
+                                <th>Contact Company Name</th>
+                                <th>Contact Email</th>
+                                <th>Contact Message</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (var item in Getcontact())
+                            {
+                                <tr>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@item.ContactId</strong></td>
+                                    <td>@item.ContactName</td>
+                                    <td>@item.ContactSubject</td>
+                                    <td>@item.ContactPhone</td>
+                                    <td>@item.ContactCompanyName</td>
+                                    <td>@item.ContactEmail</td>
+                                    @if (item.ContacMessage.Length > 75)
+                                    {
+                                        <td>@item.ContacMessage.Substring(0,75)<a href='/ContactMessageDetail/@item.ContactId'> ... </a></td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.ContacMessage<a href='/ContactMessageDetail/@item.ContactId'> ... </a></td>
+                                    }
+                                    <td><span class="badge bg-label-primary me-1">@item.ContactStatus</span> <button @onclick="()=>Change(item.ContactId)">Change</button></td>
+
+
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+
+                                                <button class="dropdown-item" @onclick="()=>Delete(item.ContactId)"><i class="bx bx-trash me-1"></i> Delete </button>
+
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+     
+    </Authorized>
+
+</AuthorizeView>
+
+@code {
+
+    ContactManager Cm = new ContactManager(new EContactRepository());
+    private List<Entitylayer.Concrete.Contact> Getcontact()
+    {
+        return Cm.GetList();
+    }
+    private void Change(int id)
+    {
+        var contact = Cm.GetByID(id);
+        if (contact.ContactStatus == true)
+        {
+            contact.ContactStatus = false;
+
+        }
+        else
+        {
+            contact.ContactStatus = true;
+        }
+        Cm.ContactUpdate(contact);
+    }
+    private void Delete(int id)
+    {
+        var value = Cm.GetByID(id);
+
+
+        Cm.ContactDelete(value);
+
+    }
+}

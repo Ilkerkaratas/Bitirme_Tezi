@@ -1,0 +1,156 @@
+﻿@page "/OurTeamAdd"
+@using BusinessLayer.Concrete
+@using DataAcceLayer.EntityFramework
+@using System.IO
+
+@inject NavigationManager navManager
+
+
+
+
+<div class="row">
+
+    <div class="col-xl">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+            </div>
+            <div class="card-body">
+                
+                <EditForm Model="ourTeam" OnValidSubmit="() =>OurTeamadd(ourTeam)">
+                    <DataAnnotationsValidator />
+                    <SfUploader ID="UploadFiles" AllowMultiple="false" AllowedExtensions=".jpg,.png,.jpeg">
+                        <UploaderEvents ValueChange="OnChange" OnRemove="OnRemove"></UploaderEvents>
+
+                    </SfUploader>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-fullname">Name</label>
+                        <div class="input-group input-group-merge">
+                           
+
+                            <InputText type="text"
+                                       class="form-control"
+                                       @bind-Value="ourTeam.OurTeamName" />
+                            <ValidationMessage For="@(() => ourTeam.OurTeamName)" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-company">Job</label>
+                        <div class="input-group input-group-merge">
+                           
+                            <InputText type="text"
+                                       class="form-control"
+                                       aria-describedby="basic-icon-default-company2" @bind-Value="ourTeam.OurTeamJob" />
+                            <ValidationMessage For="@(() => ourTeam.OurTeamJob)" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-company">Description</label>
+                        <div class="input-group input-group-merge">
+                           
+                            <InputText type="text"
+                                       class="form-control"
+                                       aria-describedby="basic-icon-default-company2" @bind-Value="ourTeam.OurTeamDescription" />
+                            <ValidationMessage For="@(() => ourTeam.OurTeamDescription)" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-company">Mail Address</label>
+                        <div class="input-group input-group-merge">
+                            
+
+                            <InputText type="text"
+                                       class="form-control"
+                                       aria-describedby="basic-icon-default-company2" @bind-Value="ourTeam.OurTeamMail" />
+                            <ValidationMessage For="@(() => ourTeam.OurTeamMail)" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-company">LinkedIn</label>
+                        <div class="input-group input-group-merge">
+                           
+
+                            <InputText type="text"
+                                       class="form-control"
+                                       aria-describedby="basic-icon-default-company2" @bind-Value="ourTeam.OurTeamLinkedIn" />
+                            <ValidationMessage For="@(() => ourTeam.OurTeamLinkedIn)" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-company">Instagram</label>
+                        <div class="input-group input-group-merge">
+                           
+
+                            <InputText type="text"
+                                       class="form-control"
+                                       aria-describedby="basic-icon-default-company2" @bind-Value="ourTeam.OurTeamInstagram" />
+                                       <ValidationMessage For="@(() => ourTeam.OurTeamInstagram)" />
+                        </div>
+                    </div>
+                  
+
+                    <button type="submit" class="btn btn-primary">
+                           
+                        Submit
+                    </button>
+
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    string fimage;
+    string ImageName;
+    string filePath;
+    CategoryManager Cm = new CategoryManager(new ECategoryRepository());
+    OurTeamManager Wm = new OurTeamManager(new EOurTeamRepository());
+    Entitylayer.Concrete.OurTeam ourTeam = new Entitylayer.Concrete.OurTeam();
+
+    private void BeforeRemove(BeforeRemoveEventArgs args)
+    {
+        args.PostRawFile = false;
+    }
+    private void OnChange(UploadChangeEventArgs args)
+    {
+
+        foreach (var file in args.Files)
+        {
+            fimage = ourTeam.OurTeamImage;
+            ImageName = $@"{Guid.NewGuid()}.jpeg";
+            var path = @"wwwroot\img\" + ImageName;
+            filePath = path;
+            FileStream filestream = new FileStream(path, FileMode.Create, FileAccess.Write);
+            file.Stream.WriteTo(filestream);
+            filestream.Close();
+            file.Stream.Close();
+        }
+
+    }
+    private void OnRemove(RemovingEventArgs args)
+    {
+        if (System.IO.File.Exists(filePath))
+        {
+            ImageName = fimage;
+            System.IO.File.Delete(filePath);
+        }
+    }
+
+    private void OurTeamadd(Entitylayer.Concrete.OurTeam w)
+    {
+
+
+
+
+        w.OurTeamImage = ImageName;
+
+
+
+        w.OurTeamStatus = true;
+
+
+        Wm.OurTeamAdd(w);
+        navManager.NavigateTo("/ourTeamadmin", true);
+    }
+}

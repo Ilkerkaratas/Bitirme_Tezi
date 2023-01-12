@@ -1,0 +1,76 @@
+﻿@using BusinessLayer.Concrete
+@using DataAcceLayer.EntityFramework
+
+@inject NavigationManager navManager
+@page "/CategoryUpdate/{id:int}"
+@{
+    category = Cm.GetByID(id);
+
+}
+
+
+
+<div class="row">
+
+    <div class="col-xl">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                
+            </div>
+            <div class="card-body">
+
+                <EditForm Model="category" OnValidSubmit="() =>UpdateCategory(category)">
+                    <DataAnnotationsValidator/>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-fullname">Category Name</label>
+                        <div class="input-group input-group-merge">
+                           
+                            <InputText type="text"
+                                       class="form-control"
+                                       aria-describedby="basic-icon-default-fullname2" @bind-Value="category.CategoryName" />
+                            <ValidationMessage For="@(() =>category.CategoryName)" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-company">Description</label>
+                        <div class="input-group input-group-merge">
+                          
+                            <InputText type="text"
+                                       class="form-control"
+                                       aria-describedby="basic-icon-default-company2" @bind-Value="category.CategoryDescription" />
+                            <ValidationMessage For="@(() =>category.CategoryDescription)" />
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary">
+                            
+                        Submit
+                    </button>
+
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter] public int id { get; set; }
+    CategoryManager Cm = new CategoryManager(new ECategoryRepository());
+    Entitylayer.Category category = new Entitylayer.Category();
+
+
+
+    private void UpdateCategory(Entitylayer.Category c)
+    {
+        c.CategoryID = id;
+
+
+        c.CategoryStatus = true;
+        Cm.CategoryUpdate(c);
+        navManager.NavigateTo("/categoryadmin", true);
+
+    }
+}
+

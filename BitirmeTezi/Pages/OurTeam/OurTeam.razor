@@ -1,0 +1,129 @@
+﻿@using BusinessLayer.Concrete
+@using DataAcceLayer.EntityFramework
+@page "/ourteamadmin"
+@attribute [Authorize(Roles = "administration")]
+
+<AuthorizeView>
+    <Authorized>
+       
+      
+
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <a class="btn btn-primary" href='/OurTeamAdd'>Add</a>
+            <br />
+            <!-- Basic Bootstrap Table -->
+            <div class="card">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">&nbsp; Admin/</span>Our Team</h4>
+           
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>OurTeam ID</th>
+                                <th>OurTeam Name</th>
+                                <th>OurTeam Job</th>
+                                <th>OurTeam Mail</th>
+                                <th>OurTeam Linkedlin</th>
+                                <th>OurTeam Instagram</th>
+                                <th>OurTeam Description</th>
+                                <th>Status</th>
+                                <th>Image</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (var item in GetOurTeam())
+                            {
+                                <tr>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@item.OurTeamID</strong></td>
+                                    <td>@item.OurTeamName</td>
+                                    <td>@item.OurTeamJob</td>
+                                    <td>@item.OurTeamMail</td>
+                                    <td>@item.OurTeamLinkedIn</td>
+                                    <td>@item.OurTeamInstagram</td>
+                                    @if (item.OurTeamDescription.Length > 75)
+                                    {
+                                        <td>@item.OurTeamDescription.Substring(0,75)<a href='/OurteamDetail/@item.OurTeamID'> ... </a></td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.OurTeamDescription<a href='/OurteamDetail/@item.OurTeamID'> ... </a></td>
+                                    }
+                                    <td><span class="badge bg-label-primary me-1">@item.OurTeamStatus</span> <button @onclick="()=>Change(item.OurTeamID)">Change</button></td>
+                                    <td>
+                                        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                            <li data-bs-toggle="tooltip"
+                                            data-popup="tooltip-custom"
+                                            data-bs-placement="top"
+                                            class="avatar avatar-xs pull-up"
+                                            title="Lilian Fuller">
+                                                <a target="_blank" href="/img/@item.OurTeamImage"><img src="/img/@item.OurTeamImage" alt="Avatar" class="rounded-circle" /></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href='/OurTeamUpdate/@item.OurTeamID'><i class="bx bx-edit-alt me-1"></i> Update </a>
+                                                <button class="dropdown-item" @onclick="()=>Delete(item.OurTeamID)"><i class="bx bx-trash me-1"></i> Delete </button>
+
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+    </Authorized>
+
+</AuthorizeView>
+
+@code {
+
+    OurTeamManager Om = new OurTeamManager(new EOurTeamRepository());
+    private List<Entitylayer.Concrete.OurTeam> GetOurTeam()
+    {
+        return Om.GetList();
+    }
+    private void Change(int id)
+    {
+        var ourTeam = Om.GetByID(id);
+        if (ourTeam.OurTeamStatus == true)
+        {
+            ourTeam.OurTeamStatus = false;
+
+        }
+        else
+        {
+            ourTeam.OurTeamStatus = true;
+        }
+        Om.OurTeamUpdate(ourTeam);
+    }
+    private  void Delete(int id)
+    {
+        var value = Om.GetByID(id);
+
+        string Loc = null;
+        if (value.OurTeamImage != null)
+        {
+            Loc = Path.Combine("wwwroot/img/", value.OurTeamImage);
+        }
+        Om.OurTeamDelete(value);
+        if (System.IO.File.Exists(Loc))
+        {
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers();
+            System.IO.File.Delete(Loc);
+        }
+    }
+}

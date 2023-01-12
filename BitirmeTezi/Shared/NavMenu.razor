@@ -1,0 +1,87 @@
+﻿<AuthorizeView Roles="administration">
+    <Authorized>
+
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <div class="app-brand demo">
+                <a href="/Admin" class="app-brand-link">
+                  
+                    <span  class="app-brand-text demo menu-text fw-bolder ms-2">iwex</span>
+                </a>
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+               
+            </div>
+
+            <div class="menu-inner-shadow"></div>
+            
+            <ul class="menu-inner py-1">
+                <!-- Dashboard -->
+                <li class="menu-item">
+                    <a class="menu-link">
+                        <div data-i18n="Analytics"><NavLink class="nav-link" href="Admin" Match="NavLinkMatch.All">
+                            <span class="menu-icon tf-icons bx bx-home-circle" aria-hidden="true"></span> Home
+                        </NavLink></div>
+                    </a>
+                    <a class="menu-link">
+                        <div data-i18n="Analytics">
+                            <NavLink class="nav-link" href="workadmin" Match="NavLinkMatch.All">
+                                <span class="menu-icon tf-icons bx bx-archive" aria-hidden="true"></span> Works
+                            </NavLink>
+                        </div>
+                    </a>
+                    <a class="menu-link">
+                        <div data-i18n="Analytics">
+                            <NavLink class="nav-link" href="announcementadmin" Match="NavLinkMatch.All">
+                                <span class="menu-icon tf-icons bx bx-archive" aria-hidden="true"></span> Announcements
+                            </NavLink>
+                        </div>
+                    </a>
+                    <a class="menu-link">
+                        <div data-i18n="Analytics">
+                            <NavLink class="nav-link" href="categoryadmin" Match="NavLinkMatch.All">
+                                <span class="menu-icon tf-icons bx bx-archive" aria-hidden="true"></span> Category
+                            </NavLink>
+                        </div>
+                    </a>
+                    <a class="menu-link">
+                        <div data-i18n="Analytics">
+                            <NavLink class="nav-link" href="contactadmin" Match="NavLinkMatch.All">
+                                <span class="menu-icon tf-icons bx bx-archive" aria-hidden="true"></span> Contact
+                            </NavLink>
+                        </div>
+                    </a><a class="menu-link">
+                        <div data-i18n="Analytics">
+                            <NavLink class="nav-link" href="ourServiceadmin" Match="NavLinkMatch.All">
+                                <span class="menu-icon tf-icons bx bx-archive" aria-hidden="true"></span> Our Services
+                            </NavLink>
+                        </div>
+                    </a><a class="menu-link">
+                        <div data-i18n="Analytics">
+                            <NavLink class="nav-link" href="ourteamadmin" Match="NavLinkMatch.All">
+                                <span class="menu-icon tf-icons bx bx-archive" aria-hidden="true"></span> Our Team
+                            </NavLink>
+                        </div>
+                    </a>
+                   
+                </li>
+
+               
+            </ul>
+        </aside>
+
+       
+    </Authorized>
+
+</AuthorizeView>
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

@@ -1,0 +1,138 @@
+﻿@model Entitylayer.Concrete.Contact
+@addTagHelper *, Micrasoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Start Banner Hero -->
+<section class="bg-light">
+    <div class="container py-4">
+        <div class="row align-items-center justify-content-between">
+            <div class="contact-header col-lg-4">
+                <h1 class="h2 pb-3 text-primary">İletişim</h1>
+                <h3 class="h4 regular-400">Bizimle İletişime Geçin</h3>
+                <p class="light-300">
+                 Daha fazla bilgi için bizimle iletişime geçin
+                </p>
+            </div>
+            <div class="contact-img col-lg-5 align-items-end col-md-4">
+                <img src="./img/banner-img-01.svg">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Hero -->
+<!-- Start Contact -->
+<section class="container py-5">
+
+    <h1 class="col-12 col-xl-8 h2 text-left text-primary pt-3">Hayallerinizi Beraber Gerçekleştirelim</h1>
+    <h2 class="col-12 col-xl-8 h4 text-left regular-400">Her Gün Daha İyiye </h2>
+    <p class="col-12 col-xl-8 text-left text-muted pb-5 light-300">
+      Hayalinizdeki proje için bizimle iletişime geçin ve prpjenizi beraber hayata geçirelim. Aklınıza takılan 
+      tüm sorular ve bilgiler için aşağıdaki formu doldurup bize mesaj atın size ulaşalım
+    </p>
+
+    <div class="row pb-4">
+        <div class="col-lg-4">
+
+            <div class="contact row mb-4">
+                <div class="contact-icon col-lg-3 col-3">
+                    <div class="py-3 mb-2 text-center border rounded text-secondary">
+                        <i class='display-6 bx bx-news'></i>
+                    </div>
+                </div>
+                <ul class="contact-info list-unstyled col-lg-9 col-9  light-300">
+                    <li class="h5 mb-0">Proje İletişimi</li>
+                    <li class="text-muted">Muhammed Esad Bacacı</li>
+                    <li class="text-muted">+90 536 487 0552</li>
+                </ul>
+            </div>
+
+            <div class="contact row mb-4">
+                <div class="contact-icon col-lg-3 col-3">
+                    <div class="border py-3 mb-2 text-center border rounded text-secondary">
+                        <i class='bx bx-laptop display-6'></i>
+                    </div>
+                </div>
+                <ul class="contact-info list-unstyled col-lg-9 col-9 light-300">
+                    <li class="h5 mb-0">Teknik Sorunlar</li>
+                    <li class="text-muted">İlker Karataş</li>
+                    <li class="text-muted">010-020-0340</li>
+                </ul>
+            </div>
+
+            <div class="contact row mb-4">
+                <div class="contact-icon col-lg-3 col-3">
+                    <div class="border py-3 mb-2 text-center border rounded text-secondary">
+                        <i class='bx bx-money display-6'></i>
+                    </div>
+                </div>
+                <ul class="contact-info list-unstyled col-lg-9 col-9 light-300">
+                    <li class="h5 mb-0">Fiyatlandırma</li>
+                    <li class="text-muted">Mehmet Ceydelioğlu</li>
+                    <li class="text-muted">+90 507 859 1317</li>
+                </ul>
+            </div>
+
+        </div>
+
+
+        <!-- Start Contact Form -->
+        <div class="col-lg-8 ">
+            <form class="contact-form row" method="post" action="#" role="form" action="Index" controller="Contact">
+
+                <div class="col-lg-6 mb-4">
+                    <div class="form-floating">
+                        <input type="text" class="form-control form-control-lg light-300" id="floatingname"  asp-for="ContactName" placeholder="Name"><span style="color:red" asp-validation-for="ContactName"></span>
+                        <label for="floatingname light-300">Ad Soyad</label>
+                    </div>
+                </div><!-- End Input Name -->
+
+                <div class="col-lg-6 mb-4">
+                    <div class="form-floating">
+                        <input type="text" class="form-control form-control-lg light-300" id="floatingemail" asp-for="ContactEmail" placeholder="Email"><span style="color:red" asp-validation-for="ContactEmail"></span>
+                        <label for="floatingemail light-300">E-mail</label>
+                    </div>
+                </div><!-- End Input Email -->
+
+                <div class="col-lg-6 mb-4">
+                    <div class="form-floating">
+                        <input type="text" class="form-control form-control-lg light-300" id="floatingphone " asp-for="ContactPhone" placeholder="Phone"><span style="color:red" asp-validation-for="ContactPhone"></span>
+                        <label for="floatingphone light-300">Telefon</label>
+                    </div>
+                </div><!-- End Input Phone -->
+
+                <div class="col-lg-6 mb-4">
+                    <div class="form-floating">
+                        <input type="text" class="form-control form-control-lg light-300" id="floatingcompany" asp-for="ContactCompanyName" placeholder="Company Name"><span style="color:red" asp-validation-for="ContactCompanyName"></span>
+                        <label for="floatingcompany light-300">Şirket Adı</label>
+                    </div>
+                </div><!-- End Input Company Name -->
+
+                <div class="col-12">
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control form-control-lg light-300" id="floatingsubject" asp-for="ContactSubject" placeholder="Subject"><span style="color:red" asp-validation-for="ContactSubject"></span>
+                        <label for="floatingsubject light-300">Konu</label>
+                    </div>
+                </div><!-- End Input Subject -->
+
+                <div class="col-12">
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control light-300" rows="8" placeholder="Message" id="floatingtextarea" asp-for="ContacMessage"></textarea><span style="color:red" asp-validation-for="ContacMessage"></span>
+                        <label for="floatingtextarea light-300">Mesaj</label>
+                    </div>
+                </div><!-- End Textarea Message -->
+
+                <div class="col-md-12 col-12 m-auto text-end">
+                    <button  class="btn btn-secondary rounded-pill px-md-5 px-4 py-2 radius-0 text-light light-300" >Mesaj Gönder</button>
+                </div>
+
+            </form>
+        </div>
+        <!-- End Contact Form -->
+
+
+    </div>
+</section>
+<!-- End Contact -->

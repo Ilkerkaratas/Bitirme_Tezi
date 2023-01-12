@@ -1,0 +1,98 @@
+﻿@using BusinessLayer.Concrete
+@using DataAcceLayer.EntityFramework
+@inject NavigationManager navManager
+@page "/ContactMessageDetail/{id:int}"
+@{
+    contact = Cm.GetByID(id);
+
+}
+@attribute [Authorize(Roles = "administration")]
+
+<AuthorizeView>
+    <Authorized>
+
+       
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+
+            <!-- Basic Bootstrap Table -->
+            <div class="card">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"> Admin/</span>Contact Detail</h4>
+                <div class="table-responsive text-nowrap">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Contact ID</th>
+                                <th>Contact Name</th>
+                                <th>Contact Subject</th>
+                                <th>Contact Phone</th>
+                                <th>Contact Company Name</th>
+                                <th>Contact Email</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                              <tr>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@contact.ContactId</strong></td>
+                                    <td>@contact.ContactName</td>
+                                    <td>@contact.ContactSubject</td>
+                                    <td>@contact.ContactPhone</td>
+                                    <td>@contact.ContactCompanyName</td>
+                                    <td>@contact.ContactEmail</td>
+                                   
+                                    <td><span class="badge bg-label-primary me-1">@contact.ContactStatus</span> <button @onclick="()=>Change(contact.ContactId)">Change</button></td>
+
+
+                                    
+
+                                </tr>
+                            
+
+                        </tbody>
+                    </table>
+                    <center><h2>Message</h2></center>
+                    <p>@contact.ContacMessage</p>
+
+                </div>
+                <button class="btn btn-danger" @onclick="()=>Delete()"> Delete </button>
+            </div>
+
+
+
+        </div>
+        
+       
+        
+    </Authorized>
+
+</AuthorizeView>
+
+@code {
+    [Parameter] public int id { get; set; }
+    ContactManager Cm = new ContactManager(new EContactRepository());
+    Entitylayer.Concrete.Contact contact = new Entitylayer.Concrete.Contact();
+
+    private void Change(int id)
+    {
+        var contact = Cm.GetByID(id);
+        if (contact.ContactStatus == true)
+        {
+            contact.ContactStatus = false;
+
+        }
+        else
+        {
+            contact.ContactStatus = true;
+        }
+        Cm.ContactUpdate(contact);
+    }
+    private void Delete()
+    {
+        var value = Cm.GetByID(id);
+
+
+        Cm.ContactDelete(value);
+        navManager.NavigateTo("/contactadmin", true);
+
+    }
+}

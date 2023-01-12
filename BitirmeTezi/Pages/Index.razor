@@ -1,0 +1,41 @@
+﻿@page "/Admin"
+@using BitirmeTezi.Authentication
+@inject NavigationManager navManager
+@attribute [Authorize(Roles = "administration")]
+@inject IJSRuntime js
+@inject UserAccountService userAccountService
+<PageTitle>Index</PageTitle>
+<AuthorizeView>
+<Authorized>
+    <h1>Hoşgeldin ,@context.User.Identity.Name!</h1>
+</Authorized>
+<NotAuthorized  >
+
+        @{
+            gologin();
+        }
+</NotAuthorized>
+</AuthorizeView>
+<AuthorizeView>
+    <Authorized>
+        <br />
+        <a href="/" class="btn btn-outline-primary" >
+           Siteyi Ziyaret Et
+        </a>
+   
+        <!-- container -->
+    </Authorized>
+</AuthorizeView>
+<SurveyPrompt Title="Admin" />
+
+
+
+@code{
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationState { get; set; }
+ 
+       
+    private void gologin(){
+        navManager.NavigateTo("login", true);
+    }
+}

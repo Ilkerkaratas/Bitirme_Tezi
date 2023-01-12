@@ -1,0 +1,40 @@
+﻿@model List<Entitylayer.Concrete.OurService>
+@foreach (var item in Model)
+{
+    
+        <!-- Start Recent Work -->
+        <div class="col-md-4 mb-3">
+            <a asp-action="OurServiceDetail" asp-controller="Home" asp-route-id="@item.OurServiceID" class="recent-work card border-0 shadow-lg overflow-hidden">
+                <img class="recent-work-img card-img" src="./img/@item.OurServiceimg" alt="Card image "style="object-fit:cover;aspect-ratio:4/3">
+                <div class="recent-work-vertical card-img-overlay d-flex align-items-end">
+                    <div class="recent-work-content text-start mb-3 ml-3 text-dark">
+                        <h3 class="card-title light-300">@item.OurServiceName</h3>
+                        <p class="card-text">
+                            @{
+
+                                if (item.OurServiceDesc != null)
+                                {
+                                    if (item.OurServiceDesc.Length > 60)
+                                    {
+                                    
+                                                <p> @item.OurServiceDesc.Substring(0, 60)...</p>
+                                    }
+                                    else
+                                    {
+                                            <p>@item.OurServiceDesc</p>
+                                    }
+                                }
+
+                            }
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- End Recent Work -->
+    
+   
+
+
+}

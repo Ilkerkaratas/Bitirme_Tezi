@@ -1,0 +1,144 @@
+﻿@model List<Entitylayer.Concrete.OurTeam>
+@{
+    ViewData["Title"] = "About";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!-- Start Banner Hero -->
+<section class="bg-light w-100">
+    <div class="container">
+        <div class="row d-flex align-items-center py-5">
+            <div class="col-lg-6 text-start">
+                <h1 class="h2 py-5 text-primary typo-space-line">Hakkımızda</h1>
+                <p class="light-300">
+                    IWEX olarak bir yazılım şirketi olup, web sitesi, mobil uygulama, logo tasarımı ve reklamcılık gibi birçok alanda müşterilerimize hizmet veriyoruz. Bu çok yönlü hizmetlerimiz sayesinde, farklı sektörlerden siz değerli müşterilerimize hitap ederek ihtiyaçlarınıza en uygun çözümler sunuyoruz. Bu özelliklerimiz, müşterilerimizin işlerini kolaylaştırıp, onların başarısına katkıda bulunacaktır.
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <img src="./img/banner-img-02.svg">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Hero -->
+<!-- Start Team Member -->
+<section class="container py-5">
+    <div class="pt-5 pb-3 d-lg-flex align-items-center gx-5">
+
+        <div class="col-lg-3" style="top:0">
+            <h2 class="h2 py-5 typo-space-line">Ekibimiz</h2>
+            <p class="text-muted light-300">
+               Ekibimiz Sizlerin Hizmetinde
+            </p>
+        </div>
+
+        <div class="col-lg-9 row">
+            @foreach (var item in Model)
+            {
+                <div class="team-member col-md-4">
+                    <img class="team-member-img img-fluid rounded-circle p-4" src="~/img/@item.OurTeamImage" alt="Card image" style="object-fit:cover;aspect-ratio:4/4">
+                    <ul class="team-member-caption list-unstyled text-center pt-4 text-muted light-300">
+                        <li>@item.OurTeamName</li>
+                        <li>@item.OurTeamJob</li>
+                    </ul>
+                </div>
+            }
+
+
+
+        </div>
+
+    </div>
+</section>
+<!-- End Team Member -->
+<!-- Start Our Partner -->
+<section class="bg-secondary py-3">
+    <div class="container py-5">
+        <h2 class="h2 text-white text-center py-5">İş Ortaklarımız</h2>
+        <div class="row text-center">
+            <div class="col-md-3 mb-3">
+                <div class="card partner-wap py-5">
+                    <a href="#"><img style="width:100px" src="~/img/duzceuni.png" /></a>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card partner-wap py-5">
+                    <a href="#"><i class='display-1 bx text-white bxs-check-shield bx-lg'></i></a>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card partner-wap py-5">
+                    <a href="#"><i class='display-1 text-white bx bxs-bolt-circle'></i></a>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card partner-wap py-5">
+                    <a href="#"><i class='display-1 text-white bx bxs-spa'></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--End Our Partner-->
+<!-- Start Progress -->
+
+<!-- End Progress -->
+<!-- Start Choice -->
+<div class="container my-4">
+    <div class="row">
+        <div class="banner-img col-lg-5">
+            <img src="./assets/img/work.svg" class="rounded img-fluid" alt="">
+        </div>
+        <div class="banner-content col-lg-7 align-self-end">
+            <h2 class="h2 pb-3">Neden Bizi Seçmelisiniz ?</h2>
+            <p class="text-muted pb-5 light-300">
+                  Özgün web siteleri tasarlıyoruz, Yazmaktan sıkılmıyoruz.
+                    Güncel çizgiler kullanarak, kaliteli ve özgün içerikler hazırlıyoruz. Sizi ve firmanızı en doğru şekilde tanıtıyor, sizi müşterilerinize en iyi şekilde yansıtacak web tasarımları hazırlıyoruz. 
+                    Profesyonel, hızlı, arama motoru dostu web siteleri tasarlıyoruz. Taleplerinizi doğru anlıyor, sorunlarınıza hızlı çözümler üretiyoruz.
+                    Aldığımız işi tüm kontroller yapıldıktan sonra hatasız olarak zamanında teslim ediyoruz.
+        </div>
+    </div>
+</div>
+
+<!-- End Choice -->
+<!-- Start Aim -->
+<section class="banner-bg bg-white py-5">
+    <div class="container my-4">
+        <div class="row text-center">
+
+            <div class="objective col-lg-4">
+                <div class="objective-icon card m-auto py-4 mb-2 mb-sm-4 bg-secondary shadow-lg">
+                    <i class="display-4 bx bxs-bulb text-light"></i>
+                </div>
+                <h2 class="objective-heading h3 mb-2 mb-sm-4 light-300">Vizyonumuz</h2>
+                <p class="light-300">
+                    Güvenilir bir iş yol izleyerek projelerimizi sizlere sunmak.
+                </p>
+            </div>
+
+            <div class="objective col-lg-4 mt-sm-0 mt-4">
+                <div class="objective-icon card m-auto py-4 mb-2 mb-sm-4 bg-secondary shadow-lg">
+                    <i class='display-4 bx bx-revision text-light'></i>
+                </div>
+                <h2 class="objective-heading h3 mb-2 mb-sm-4 light-300">Görevimiz</h2>
+                <p class="light-300">
+                   Sizlerin isteklerini dikkate alarak, size en verimli şekilde hizmet vermek.
+                </p>
+            </div>
+
+            <div class="objective col-lg-4 mt-sm-0 mt-4">
+                <div class="objective-icon card m-auto py-4 mb-2 mb-sm-4 bg-secondary shadow-lg">
+                    <i class="display-4 bx bxs-select-multiple text-light"></i>
+                </div>
+                <h2 class="objective-heading h3 mb-2 mb-sm-4 light-300">Hedefimiz</h2>
+                <p class="light-300">
+                    Bölgenin en başarılı yazılım şirketi olmak.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- End Aim -->

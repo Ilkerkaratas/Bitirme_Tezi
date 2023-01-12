@@ -1,0 +1,128 @@
+﻿@page "/AddWork"
+@using BusinessLayer.Concrete
+@using DataAcceLayer.EntityFramework
+@using System.IO
+
+@inject NavigationManager navManager
+@{
+   
+    var categories = Cm.GetList();
+}
+
+
+<div class="row">
+
+    <div class="col-xl">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">            
+            </div>
+            <div class="card-body">
+                
+                <EditForm Model="work" OnValidSubmit=" () =>Workadd(work)" >
+                    <DataAnnotationsValidator/>
+                    <SfUploader ID="UploadFiles" AllowMultiple="false" AllowedExtensions=".jpg,.png,.jpeg">
+                        <UploaderEvents ValueChange="OnChange" OnRemove="OnRemove"></UploaderEvents>
+
+                    </SfUploader>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-fullname">Title</label>
+                        <div class="input-group input-group-merge">
+                          
+                           
+                            <InputText type="text"
+                                       class="form-control"
+                                       aria-describedby="basic-icon-default-fullname2" @bind-Value="work.WorkTitle" />
+                            <ValidationMessage For="@(() => work.WorkTitle)" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-company">Content</label>
+                        <div class="input-group input-group-merge">
+                           
+                            
+                            <InputText type="text"
+                                   class="form-control"
+                                   aria-describedby="basic-icon-default-company2"  @bind-Value="work.WorkContent" />
+                            <ValidationMessage For="@(() => work.WorkContent)" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-company">Category</label>
+                        <div class="input-group input-group-merge">                           
+                            <InputSelect id="department" @bind-Value="work.CategoryID" aria-describedby="basic-icon-default-company2" class="form-control">
+                                @foreach (var dept in categories)
+                                {
+                                    <option value="@dept.CategoryID">@dept.CategoryName</option>
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="@(() => work.CategoryID)" />
+                           
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                           
+                       Submit
+                    </button>
+                    
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@code {
+    string fimage;
+    string ImageName;
+    string filePath;
+    CategoryManager Cm = new CategoryManager(new ECategoryRepository());
+    WorkManager Wm = new WorkManager(new EWorkRepository());
+    Entitylayer.Work work = new Entitylayer.Work();
+
+    private void BeforeRemove(BeforeRemoveEventArgs args)
+    {
+        args.PostRawFile = false;
+    }
+    private void OnChange(UploadChangeEventArgs args)
+    {
+
+        foreach (var file in args.Files)
+        {
+            fimage = work.WorkImage;
+            ImageName = $@"{Guid.NewGuid()}.jpeg";
+            var path = @"wwwroot\img\" + ImageName;
+            filePath = path;
+            FileStream filestream = new FileStream(path, FileMode.Create, FileAccess.Write);
+            file.Stream.WriteTo(filestream);
+            filestream.Close();
+            file.Stream.Close();
+        }
+
+    }
+    private void OnRemove(RemovingEventArgs args)
+    {
+        if (System.IO.File.Exists(filePath))
+        {
+            ImageName = fimage;
+            System.IO.File.Delete(filePath);
+        }
+    }
+
+    private void Workadd(Entitylayer.Work w) {
+
+      
+        w.WorkImage = ImageName;
+
+      
+        w.WorkDate = DateTime.Now;
+        w.WorkStatus = true;
+       
+               
+        Wm.WorkAdd(w);
+        navManager.NavigateTo("/workadmin", true);
+    }
+}
