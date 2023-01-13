@@ -37,9 +37,9 @@
                                     <td>@item.ContactPhone</td>
                                     <td>@item.ContactCompanyName</td>
                                     <td>@item.ContactEmail</td>
-                                    @if (item.ContacMessage.Length > 75)
+                                    @if (item.ContacMessage.Length > 52)
                                     {
-                                        <td>@item.ContacMessage.Substring(0,75)<a href='/ContactMessageDetail/@item.ContactId'> ... </a></td>
+                                        <td>@item.ContacMessage.Substring(0,52)<a href='/ContactMessageDetail/@item.ContactId'> ... </a></td>
                                     }
                                     else
                                     {

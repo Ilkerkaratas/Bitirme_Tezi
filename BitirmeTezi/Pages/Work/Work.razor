@@ -38,9 +38,9 @@
                                 <tr>
                                     <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@item.WorkID</strong></td>
                                     <td>@item.WorkTitle</td>                                    
-                                    @if (item.WorkContent.Length > 75)
+                                    @if (item.WorkContent.Length > 52)
                                     {
-                                        <td>@item.WorkContent.Substring(0,75)<a href='/WorkContentDetail/@item.WorkID'> ... </a></td>
+                                        <td>@item.WorkContent.Substring(0,52)<a href='/WorkContentDetail/@item.WorkID'> ... </a></td>
                                     }
                                     else
                                     {

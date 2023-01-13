@@ -40,9 +40,9 @@
                                     <td>@item.OurTeamMail</td>
                                     <td>@item.OurTeamLinkedIn</td>
                                     <td>@item.OurTeamInstagram</td>
-                                    @if (item.OurTeamDescription.Length > 75)
+                                    @if (item.OurTeamDescription.Length > 52)
                                     {
-                                        <td>@item.OurTeamDescription.Substring(0,75)<a href='/OurteamDetail/@item.OurTeamID'> ... </a></td>
+                                        <td>@item.OurTeamDescription.Substring(0,52)<a href='/OurteamDetail/@item.OurTeamID'> ... </a></td>
                                     }
                                     else
                                     {

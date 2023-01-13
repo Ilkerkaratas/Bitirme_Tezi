@@ -31,9 +31,9 @@
                                 <tr>
                                     <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@item.OurServiceID</strong></td>
                                     <td>@item.OurServiceName</td>
-                                    @if (item.OurServiceDesc.Length > 75)
+                                    @if (item.OurServiceDesc.Length > 52)
                                     {
-                                        <td>@item.OurServiceDesc.Substring(0,75)<a href='/OurServiceDetail/@item.OurServiceID'> ... </a></td>
+                                        <td>@item.OurServiceDesc.Substring(0,52)<a href='/OurServiceDetail/@item.OurServiceID'> ... </a></td>
                                     }
                                     else
                                     {
