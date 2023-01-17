@@ -97,9 +97,12 @@
     {
         if (fimage != ImageName)
         {
-            System.IO.File.Delete(@"wwwroot\img\" + ourService.OurServiceimg);
+            if (fimage != null)
+            {
+                System.IO.File.Delete(@"wwwroot\img\" + ourService.OurServiceimg);
+            }
         }
-        if (fimage != null)
+        if (ImageName != null)
         {
             w.OurServiceimg = ImageName;
         }

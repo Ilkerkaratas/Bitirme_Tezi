@@ -108,12 +108,12 @@
     {
 
 
-        fimage = ourTeam.OurTeamImage;
+       
         
 
         foreach (var file in args.Files)
         {
-
+            fimage = ourTeam.OurTeamImage;
             ImageName = $@"{Guid.NewGuid()}.jpeg";
             var path = @"wwwroot\img\" + ImageName;
             filePath = path;
@@ -134,9 +134,12 @@
     private void UpddateOurTeam(Entitylayer.Concrete.OurTeam w)
     {
         if(fimage!=ImageName){
-            System.IO.File.Delete(@"wwwroot\img\" + ourTeam.OurTeamImage);
+            if (fimage != null)
+            {
+                System.IO.File.Delete(@"wwwroot\img\" + ourTeam.OurTeamImage);
+            }
         }
-        if (fimage != null)
+        if (ImageName != null)
         {
             w.OurTeamImage = ImageName;
         }

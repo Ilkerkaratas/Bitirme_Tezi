@@ -69,12 +69,11 @@
         </div>
     </div>
 </div>
-
 @code {
     string fimage;
     string ImageName;
     string filePath;
-    [Parameter] public int id{ get; set; }
+    [Parameter] public int id { get; set; }
     WorkManager Wm = new WorkManager(new EWorkRepository());
     Entitylayer.Work work = new Entitylayer.Work();
 
@@ -106,11 +105,16 @@
             System.IO.File.Delete(filePath);
         }
     }
-    private void UpddateWork(Entitylayer.Work w){
-        if(fimage!=ImageName){
-            System.IO.File.Delete(@"wwwroot\img\" + work.WorkImage);
+    private void UpddateWork(Entitylayer.Work w)
+    {
+        if (fimage != ImageName)
+        {
+            if (fimage != null)
+            {
+                System.IO.File.Delete(@"wwwroot\img\" + work.WorkImage);
+            }
         }
-        if (fimage!=null)
+        if (ImageName != null)
         {
             w.WorkImage = ImageName;
         }
@@ -118,8 +122,8 @@
         {
             w.WorkImage = work.WorkImage;
         }
-        
-        w.WorkID = id;        
+
+        w.WorkID = id;
         w.WorkDate = DateTime.Now;
         w.WorkStatus = true;
         Wm.WorkUpdate(w);
