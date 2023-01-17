@@ -3,6 +3,7 @@ using Syncfusion.Blazor;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using BitirmeTezi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NjA0NzI4QDMyMzAyZTMxMmUzMElnd0owNjFveXpldXBBVW9aQ3BkR2VGQUZRK2doVFZPak92T2VzNm5MR1k9");
@@ -41,3 +42,4 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapFallbackToPage("/_Host");
 app.Run();
+
