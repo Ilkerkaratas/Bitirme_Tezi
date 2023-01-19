@@ -1,0 +1,3 @@
+admin panele giriş /login iledir
+Kullanıcı Adı:Admin
+Şifre:Admin
